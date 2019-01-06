@@ -1,18 +1,17 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-
 @app.route('/')
-def index():
-    return '<html><body><h1>Hello World</h1></body></html>'
+def student():
+   return render_template('student.html')
 
-
-@app.route('/result')
+@app.route('/result', methods = ['POST', 'GET'])
 def result():
-    dict = {'phy': 50, 'che': 60, 'maths': 70}
-    return render_template('result.html', result=dict)
+    if request.method == 'POST':
+        result = request.form
+        return render_template('result.html', result = result)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug = True)
